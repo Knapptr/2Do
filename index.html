@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="./node_modules/@fortawesome/fontawesome-free/css/all.css">
+</head>
+<body>
+    <div class="taskInput">
+        <label for="taskIn">Task:</label>
+        <input type="text" name="taskIn" id="taskInput" class = "taskInput"> 
+        <label for="dueIn">Due Date:</label>
+        <input type="date" name="dueIn" id="dueIn" class="dateInput">
+        <!-- <label for="timeIn">Time Due:</label>
+        <input type="time" name="timeIn" id="timeIn"> -->
+        <label for="projectName">Task Type:</label>
+         <input list="projectName" id="projectIn">
+            <datalist id="projectName">
+             <!-- <option value="home"></option>
+             <option value="school"></option>
+             <option value="work"></option>
+             <option value="hobby"></option> -->
+            </datalist>
+         <button id="submitBtn">Submit</button>
+    </div>
+<!-- Search tasks -->
+<div class="search">
+    <div class="projectNav">
+    
+</div> 
+
+<!-- Search Names -->
+    <div class="searchName">
+        <input id="taskSearchIn" type="text" placeholder="Search Task">
+        <button id="nameSearchBtn">Search</button>
+    </div>
+</div>
+
+
+<div id="displayWindow">
+    <div class="editPopup">
+        <span id="closePopup">Close</span>
+        <table id="editTable">
+            <tr><td>
+                <input type="text" name="taskName" id="taskName" class="editorWideInput"></td></tr>
+            <tr>
+            <td>
+                <label for="dueDate">Due:</label>
+                <input type="date" name="dueDate" id="dueDate"></td>
+            <td>
+            </td>
+        </tr>
+        <tr><td> 
+            <label for="editorPJs">Project:</label>
+            <input list='editorPjs' id="pjSelection" name="editorPJs" >
+            <datalist id='editorPjs'>
+                
+            </datalist>
+            <label for="completeCheckBox">Complete?</label>
+            <input type="checkbox" name="completeCheckBox" id="completeCheckBox">
+
+        </td>
+    </tr>
+        </table>
+    <textarea name="notes" id="notesField" cols="30" rows="10" placeholder="Notes"></textarea>
+
+    
+    
+    
+    
+    <button id='saveBtn'>Save Changes</button>
+    </div>      
+    <ul id='listDisplay'>
+
+    </ul>
+</div>
+
+    
+
+
+</div>
+
+<div class="bottomControls"><Button id="clearAll">Clear All</Button></div>
+    <script src="./dist/main.js"></script>
+</body>
+</html>
