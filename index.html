@@ -4,19 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>2do</title>
+    <link href="https://fonts.googleapis.com/css?family=Poppins:400,600,700,800,900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./style.css">
     <link rel="stylesheet" href="./node_modules/@fortawesome/fontawesome-free/css/all.css">
 </head>
 <body>
-    <div class="taskInput">
-        <label for="taskIn">Task:</label>
-        <input type="text" name="taskIn" id="taskInput" class = "taskInput"> 
-        <label for="dueIn">Due Date:</label>
+    <header>2do</header>
+    <div class="taskInput mainView">
+        <input type="text" name="taskIn" id="taskInput" placeholder="Task"> 
+        <label for="dueIn">Due:</label>
         <input type="date" name="dueIn" id="dueIn" class="dateInput">
         <!-- <label for="timeIn">Time Due:</label>
         <input type="time" name="timeIn" id="timeIn"> -->
-        <label for="projectName">Task Type:</label>
+        <label for="projectIn">Project:</label>
          <input list="projectName" id="projectIn">
             <datalist id="projectName">
              <!-- <option value="home"></option>
@@ -27,16 +28,17 @@
          <button id="submitBtn">Submit</button>
     </div>
 <!-- Search tasks -->
-<div class="search">
+<div class="mainView">
     <div class="projectNav">
     
 </div> 
-
+<div class="search">
 <!-- Search Names -->
     <div class="searchName">
         <input id="taskSearchIn" type="text" placeholder="Search Task">
         <button id="nameSearchBtn">Search</button>
     </div>
+</div>
 </div>
 
 
@@ -45,6 +47,7 @@
         <span id="closePopup">Close</span>
         <table id="editTable">
             <tr><td>
+                <label for="taskName">Project:</label>
                 <input type="text" name="taskName" id="taskName" class="editorWideInput"></td></tr>
             <tr>
             <td>
@@ -54,7 +57,7 @@
             </td>
         </tr>
         <tr><td> 
-            <label for="editorPJs">Project:</label>
+            <label for="pjSelection">Project:</label>
             <input list='editorPjs' id="pjSelection" name="editorPJs" >
             <datalist id='editorPjs'>
                 
@@ -65,7 +68,7 @@
         </td>
     </tr>
         </table>
-    <textarea name="notes" id="notesField" cols="30" rows="10" placeholder="Notes"></textarea>
+    <textarea name="notes" id="notesField" cols="10" rows="3" placeholder="Notes"></textarea>
 
     
     
@@ -83,7 +86,8 @@
 
 </div>
 
-<div class="bottomControls"><Button id="clearAll">Clear All</Button></div>
-    <script src="./dist/main.js"></script>
+<div class="bottomControls mainView"><Button id="clearAll">Clear All</Button></div>
+<footer></footer>    
+<script src="./dist/main.js"></script>
 </body>
 </html>

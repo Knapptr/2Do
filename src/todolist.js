@@ -2,6 +2,8 @@
 import { local } from "./localStorageGetSet";
 import { display } from "./display";
 import { gui } from "./gui";
+/////IMPORT HERE
+
 
 const initProjectArray = ['all']
 
@@ -15,6 +17,9 @@ export let toDoList = {
         console.log(toDoList.projects)
         local.save(toDoList.list,toDoList.projects)
         display.clearDisplay(gui.window.list);
+        gui.search.refreshPjList();
+        gui.sub.populatePjList();
+        // lastSearch =[toDoList.list,'task', "all"];
         
         
         
@@ -46,6 +51,7 @@ export let toDoList = {
             toDoList.projects.push(pjInput);
             
         }
+        
     }
     },
     initProjects(){

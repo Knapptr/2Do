@@ -1,10 +1,49 @@
+*{
+    font-family: poppins;
+    margin: 0 1px;
+}
+html{
+    background: linear-gradient(45deg,#0091FF,#FF6E00) no-repeat center center fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
+    
+    
+}
+
+
+header{
+    background-color: #0091FF;
+    font-size: 48px;
+    color: white;
+    font-family: poppins;
+    font-weight: 600;
+    text-align: center;
+ 
+}
+
+.projectNav{
+    background-color: #FF6E00;
+    display: flex;
+    flex-wrap: wrap;
+
+}
+
 .taskInput{
-    border: 1px solid black;
+    border: 1px solid rgba(255, 255, 255, 0.144);
     padding: 10px;
+    background-color: #0091FF;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+.taskInput>input{
+    border: none;
+    font-size: 14px;
 }
 .search{
-    border: 1px solid black;
-    padding: 10px;
+    display: flex;
+    justify-content: flex-end;
+    border: none;
+    
 }
 .taskCard{
     position: relative;
@@ -12,8 +51,19 @@
     background-color: antiquewhite;
     border-radius: 10px;
     width: 500px;
+    padding: 5px;
+    box-shadow: 12px 12px 2px 1px rgba(0, 0, 0, 0.2);
     
     
+}
+.smallText{
+    font-size: 12px;
+    display: inline;
+}
+.pushRight{
+    position: absolute;
+    right: 10px;
+    bottom: 0;
 }
 .taskListNode{
     list-style-type: none;
@@ -43,20 +93,23 @@
     
 }
 .pjOption{
-    color: blueviolet;
-    background-color: ghostwhite;
+    font-weight: bold;
+    color:white;
+    background-color: #0091FF;
     margin: 5px;
     padding: 5px;
     text-align: center;
     text-transform: uppercase;
-    cursor: pointer;
-    transition: .3s;
+    cursor: pointer;      
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
+    transition: color .3s;
+    
 }
 .pjOption:hover{
-    color: rgb(99, 21, 172);
-    background-color: rgb(206, 206, 253);
+    color: rgb(255, 118, 14);
+    background-color: black;
+    
 }
 #taskSearchIn{
     margin-top: 5px;
@@ -72,16 +125,29 @@
     font-size:26px;
     
 }
+.deleteBtn{
+    display: inline-block;
+}
 
 .editPopup{
+    font-size: 20px;
     position: relative;
     width: 700px;
     left: 50%;
     margin-left: -350px;
-    background: red;
+    background: #FF6E00;
     border-radius: 20px;
     display: none;
+    padding: 10px;
+    box-shadow: 12px 12px 2px 1px rgba(0, 0, 255, .2);
+    
    
+}
+.editPopup,input{
+    font-size: 18px;
+    background-color:#FF6E00;
+    border: 1px solid rgba(0, 0, 0, 0.411);
+    border-radius: 5px;
 }
 .popUpVisible{
     display: inline-block;
@@ -89,16 +155,35 @@
 }
 
 #closePopup{
+    cursor: default;
+    font-size: 12px;
     position: absolute;
-    top: 5px;
-    right: 5px;
+    top: 1px;
+    right: 1px;
+    color: black;
+    font-weight: bold;
+    background: #0091FF;
+    padding: 2px;
+    border-radius: 8px;
+}
+#closePopup:hover{
+    color: white;
 }
 #editTable{
     margin-right: 40px;
     width: 70%;
 }
 #notesField{
+    border-radius: 10px;
+    font-size: 16px;
     width: 90%;
+    display: block;
+    margin: 10px auto;
+    background-color: rgba(245, 245, 245, 0.384)
+    
+    
+}
+#saveBtn{
     display: block;
     margin: 0 auto;
 }
@@ -108,4 +193,44 @@
 }
 #completeCheckBox{
     display: inline;
+}
+.bottomControls{
+    position: fixed;
+    bottom: 10px;
+    background-color: #0091FF;
+    width: 100%;
+    padding: 1px;
+
+}
+#clearAll{
+    margin-left: 10px;
+}
+footer{
+    height: 30px;
+    
+}
+.mainView{
+    visibility: visible;
+    
+    opacity: 1;
+    transition: visibility 0s linear 0ms, opacity .2s;
+    
+    
+
+}
+.mainView--hidden{
+    opacity: 0;
+    visibility: hidden;
+    transition: visibility 0s linear 300ms, opacity .2s;
+
+    
+
+    
+    
+    
+}
+.currentSelection{
+    background-color: rgba(255, 115, 0, 0.774);
+    color: rgba(0, 0, 0, 0.61);
+    border: 1px solid black;
 }

@@ -5,6 +5,7 @@ import { popUpBox } from './popUpContent';
 import {format, parse, parseISO} from 'date-fns'
 import {toDoEvent} from './todo'
 import {local} from './localStorageGetSet'
+import { search,lastSearch } from './searchList';
 
 
 ///use single task as source to render edit fields in popup
@@ -19,6 +20,7 @@ export let popUp ={
     
     toggle(){
         gui.popup.popup.classList.toggle('popUpVisible')
+        gui.mainViewToggle();
     },
     renderPopUp(source){
         
@@ -84,8 +86,9 @@ export let popUp ={
         
         dest[source.dataID] = replacementEvent//find original element in array and replace w/ new
         display.clearDisplay(gui.window.list)
-        display.renderList(toDoList.list,gui.window.list)
-        local.save(toDoList.list)
+        console.log(lastSearch)
+        display.renderList(search(...lastSearch),gui.window.list)
+        local.save(toDoList.list,toDoList.projects)
         
     },
     

@@ -17036,6 +17036,15 @@ __webpack_require__.r(__webpack_exports__);
 
 
 let gui = {
+        mainView:document.querySelectorAll('.mainView'),
+
+       mainViewToggle(){
+        gui.mainView.forEach(el=>{
+            console.log('excecuting')
+            console.log(gui.mainView)
+            el.classList.toggle('mainView--hidden')
+        })
+       },
    
         sub:{
             taskNameIn: document.querySelector('#taskInput'),
@@ -17059,25 +17068,35 @@ let gui = {
             taskSearchIn: document.querySelector('#taskSearchIn'),
             taskSearchBtn: document.querySelector('#nameSearchBtn'),
             projectList: document.querySelector('.projectNav'),
+
             refreshPjList(){
+              
+                console.log(_searchList__WEBPACK_IMPORTED_MODULE_2__["lastSearch"][2]);
                     gui.search.projectList.textContent="";
+                    let pjOptionButtons = []
                     _todolist__WEBPACK_IMPORTED_MODULE_1__["toDoList"].projects.forEach(el=>{
                         if(el!=="" && el!==" "){
+                        
                             let newEl = document.createElement('span')
                             newEl.classList.add('pjOption');
+                            
                             newEl.dataset.pj = el;
                             newEl.textContent = el;
+                            pjOptionButtons.push(newEl)
                             newEl.addEventListener("click",()=>{
-                                gui.popup.popup.classList.remove('popUpVisible')
+                                pjOptionButtons.forEach(el=>el.classList.remove('currentSelection'))
+                                newEl.classList.add('currentSelection')
                                 
                                 let results = Object(_searchList__WEBPACK_IMPORTED_MODULE_2__["search"])(_todolist__WEBPACK_IMPORTED_MODULE_1__["toDoList"].list,'project',el)
-                                if(el==='all'){results = _todolist__WEBPACK_IMPORTED_MODULE_1__["toDoList"].list}
+                                
                                 _display__WEBPACK_IMPORTED_MODULE_3__["display"].clearDisplay(gui.window.list)
                                 _display__WEBPACK_IMPORTED_MODULE_3__["display"].renderList(results,gui.window.list)
                             })
                             this.projectList.appendChild(newEl);
                         }
                 })
+               
+                document.querySelector(`[data-pj=${_searchList__WEBPACK_IMPORTED_MODULE_2__["lastSearch"][2]}`).classList.add('currentSelection');
             },
            
             
@@ -17085,7 +17104,7 @@ let gui = {
         },
         window:{
             display: document.querySelector('#displayWindow'),
-            list: document.querySelector('#listDisplay') //A UL that the list is rendered in
+            list: document.querySelector('#listDisplay'), //A UL that the list is rendered in
             
         },
         card:{
@@ -17105,8 +17124,9 @@ let gui = {
             _display__WEBPACK_IMPORTED_MODULE_3__["display"].renderList(_todolist__WEBPACK_IMPORTED_MODULE_1__["toDoList"].list,gui.window.list)
             gui.sub.populatePjList(_todolist__WEBPACK_IMPORTED_MODULE_1__["toDoList"].projects);
             gui.search.refreshPjList();
+            document.querySelector("[data-pj='all']").classList.add('currentSelection')
         },
-     clearer: function(obj){
+     clearer(obj){
 
     for(let i in obj){
         obj[i].value = ""
@@ -17128,7 +17148,7 @@ let behavior = (function (){
       gui.sub.populatePjList(_todolist__WEBPACK_IMPORTED_MODULE_1__["toDoList"].projects);
       gui.clearer(gui.sub)
       _display__WEBPACK_IMPORTED_MODULE_3__["display"].clearDisplay(gui.window.list)
-      _display__WEBPACK_IMPORTED_MODULE_3__["display"].renderList(_todolist__WEBPACK_IMPORTED_MODULE_1__["toDoList"].list,gui.window.list)
+      _display__WEBPACK_IMPORTED_MODULE_3__["display"].renderList(Object(_searchList__WEBPACK_IMPORTED_MODULE_2__["search"])(..._searchList__WEBPACK_IMPORTED_MODULE_2__["lastSearch"]),gui.window.list)
       gui.search.refreshPjList();
       
     })
@@ -17143,7 +17163,9 @@ let behavior = (function (){
 
 
 
-    gui.search.refreshPjList();
+   
+
+
     // gui.search.projectNameIn.addEventListener('change',()=>{
     //     let results;
     //     display.clearDisplay(gui.window.list)
@@ -17370,6 +17392,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var date_fns__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! date-fns */ "./node_modules/date-fns/esm/index.js");
 /* harmony import */ var _todo__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./todo */ "./src/todo.js");
 /* harmony import */ var _localStorageGetSet__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./localStorageGetSet */ "./src/localStorageGetSet.js");
+/* harmony import */ var _searchList__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./searchList */ "./src/searchList.js");
+
 
 
 
@@ -17391,6 +17415,7 @@ let popUp ={
     
     toggle(){
         _gui__WEBPACK_IMPORTED_MODULE_0__["gui"].popup.popup.classList.toggle('popUpVisible')
+        _gui__WEBPACK_IMPORTED_MODULE_0__["gui"].mainViewToggle();
     },
     renderPopUp(source){
         
@@ -17456,8 +17481,9 @@ let popUp ={
         
         dest[source.dataID] = replacementEvent//find original element in array and replace w/ new
         _display__WEBPACK_IMPORTED_MODULE_1__["display"].clearDisplay(_gui__WEBPACK_IMPORTED_MODULE_0__["gui"].window.list)
-        _display__WEBPACK_IMPORTED_MODULE_1__["display"].renderList(_todolist__WEBPACK_IMPORTED_MODULE_2__["toDoList"].list,_gui__WEBPACK_IMPORTED_MODULE_0__["gui"].window.list)
-        _localStorageGetSet__WEBPACK_IMPORTED_MODULE_6__["local"].save(_todolist__WEBPACK_IMPORTED_MODULE_2__["toDoList"].list)
+        console.log(_searchList__WEBPACK_IMPORTED_MODULE_7__["lastSearch"])
+        _display__WEBPACK_IMPORTED_MODULE_1__["display"].renderList(Object(_searchList__WEBPACK_IMPORTED_MODULE_7__["search"])(..._searchList__WEBPACK_IMPORTED_MODULE_7__["lastSearch"]),_gui__WEBPACK_IMPORTED_MODULE_0__["gui"].window.list)
+        _localStorageGetSet__WEBPACK_IMPORTED_MODULE_6__["local"].save(_todolist__WEBPACK_IMPORTED_MODULE_2__["toDoList"].list,_todolist__WEBPACK_IMPORTED_MODULE_2__["toDoList"].projects)
         
     },
     
@@ -17501,21 +17527,34 @@ let popUpBox = {
 /*!***************************!*\
   !*** ./src/searchList.js ***!
   \***************************/
-/*! exports provided: search */
+/*! exports provided: lastSearch, search */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "lastSearch", function() { return lastSearch; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "search", function() { return search; });
+/* harmony import */ var _gui__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./gui */ "./src/gui.js");
+/* harmony import */ var _todolist__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./todolist */ "./src/todolist.js");
+
+
 ////searches an array of objects (spec by location) and returns an array of objects whos 'prop' matches the 'term'
+let lastSearch = [_todolist__WEBPACK_IMPORTED_MODULE_1__["toDoList"].list,'task', "all"];
 
 let search = (location,prop,term)=>{
+    
     console.log('location: '+location)
     console.log('prop: '+prop)
     console.log('term: ' +term)
     let results = [];
     results = location.filter(el=> el[prop] === term)
+    if(term === "all"){results = _todolist__WEBPACK_IMPORTED_MODULE_1__["toDoList"].list}
     console.log(results);
+    lastSearch = [_todolist__WEBPACK_IMPORTED_MODULE_1__["toDoList"].list, prop, term];
+    
+    
+    
+    
     return results;
 }
 
@@ -17559,7 +17598,9 @@ let taskCard ={
     </div>
     <div class="dateAssigned cardText">
     </div>
-    <div><button data-index=${el.dataID} class="deleteBtn">Delete Task</button></div>`
+    
+    <div class= 'deleteBtn'><button data-index=${el.dataID}>Delete Task</button></div>
+    <footer class='smallText pushRight'>double click to edit</footer>`
     
     return content;
 }
@@ -17625,6 +17666,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+/////IMPORT HERE
+
 
 const initProjectArray = ['all']
 
@@ -17638,6 +17681,9 @@ let toDoList = {
         console.log(toDoList.projects)
         _localStorageGetSet__WEBPACK_IMPORTED_MODULE_0__["local"].save(toDoList.list,toDoList.projects)
         _display__WEBPACK_IMPORTED_MODULE_1__["display"].clearDisplay(_gui__WEBPACK_IMPORTED_MODULE_2__["gui"].window.list);
+        _gui__WEBPACK_IMPORTED_MODULE_2__["gui"].search.refreshPjList();
+        _gui__WEBPACK_IMPORTED_MODULE_2__["gui"].sub.populatePjList();
+        // lastSearch =[toDoList.list,'task', "all"];
         
         
         
@@ -17669,6 +17715,7 @@ let toDoList = {
             toDoList.projects.push(pjInput);
             
         }
+        
     }
     },
     initProjects(){

@@ -25,7 +25,9 @@ export let taskCard ={
     </div>
     <div class="dateAssigned cardText">
     </div>
-    <div><button data-index=${el.dataID} class="deleteBtn">Delete Task</button></div>`
+    
+    <div class= 'deleteBtn'><button data-index=${el.dataID}>Delete Task</button></div>
+    <footer class='smallText pushRight'>double click to edit</footer>`
     
     return content;
 }

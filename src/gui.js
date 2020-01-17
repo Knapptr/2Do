@@ -1,10 +1,19 @@
 import { toDoEvent } from "./todo";
 import { toDoList } from "./todolist";
-import {search} from './searchList';
+import {search,lastSearch} from './searchList';
 import {display} from './display';
 import { local } from "./localStorageGetSet";
 
 export let gui = {
+        mainView:document.querySelectorAll('.mainView'),
+
+       mainViewToggle(){
+        gui.mainView.forEach(el=>{
+            console.log('excecuting')
+            console.log(gui.mainView)
+            el.classList.toggle('mainView--hidden')
+        })
+       },
    
         sub:{
             taskNameIn: document.querySelector('#taskInput'),
@@ -28,25 +37,35 @@ export let gui = {
             taskSearchIn: document.querySelector('#taskSearchIn'),
             taskSearchBtn: document.querySelector('#nameSearchBtn'),
             projectList: document.querySelector('.projectNav'),
+
             refreshPjList(){
+              
+                console.log(lastSearch[2]);
                     gui.search.projectList.textContent="";
+                    let pjOptionButtons = []
                     toDoList.projects.forEach(el=>{
                         if(el!=="" && el!==" "){
+                        
                             let newEl = document.createElement('span')
                             newEl.classList.add('pjOption');
+                            
                             newEl.dataset.pj = el;
                             newEl.textContent = el;
+                            pjOptionButtons.push(newEl)
                             newEl.addEventListener("click",()=>{
-                                gui.popup.popup.classList.remove('popUpVisible')
+                                pjOptionButtons.forEach(el=>el.classList.remove('currentSelection'))
+                                newEl.classList.add('currentSelection')
                                 
                                 let results = search(toDoList.list,'project',el)
-                                if(el==='all'){results = toDoList.list}
+                                
                                 display.clearDisplay(gui.window.list)
                                 display.renderList(results,gui.window.list)
                             })
                             this.projectList.appendChild(newEl);
                         }
                 })
+               
+                document.querySelector(`[data-pj=${lastSearch[2]}`).classList.add('currentSelection');
             },
            
             
@@ -54,7 +73,7 @@ export let gui = {
         },
         window:{
             display: document.querySelector('#displayWindow'),
-            list: document.querySelector('#listDisplay') //A UL that the list is rendered in
+            list: document.querySelector('#listDisplay'), //A UL that the list is rendered in
             
         },
         card:{
@@ -74,8 +93,9 @@ export let gui = {
             display.renderList(toDoList.list,gui.window.list)
             gui.sub.populatePjList(toDoList.projects);
             gui.search.refreshPjList();
+            document.querySelector("[data-pj='all']").classList.add('currentSelection')
         },
-     clearer: function(obj){
+     clearer(obj){
 
     for(let i in obj){
         obj[i].value = ""
@@ -97,7 +117,7 @@ export let behavior = (function (){
       gui.sub.populatePjList(toDoList.projects);
       gui.clearer(gui.sub)
       display.clearDisplay(gui.window.list)
-      display.renderList(toDoList.list,gui.window.list)
+      display.renderList(search(...lastSearch),gui.window.list)
       gui.search.refreshPjList();
       
     })
@@ -112,7 +132,9 @@ export let behavior = (function (){
 
 
 
-    gui.search.refreshPjList();
+   
+
+
     // gui.search.projectNameIn.addEventListener('change',()=>{
     //     let results;
     //     display.clearDisplay(gui.window.list)
